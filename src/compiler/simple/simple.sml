@@ -111,6 +111,7 @@ structure Simple =
                                                  * simplify-fields pass. The third argument is
                                                  * the maximum support of the image.
                                                  *)
+      | E_CondField of var * var * var * ty     (* conditional with field type results *)
       | E_FieldFn of func                       (* lift a differentiable field function to a
                                                  * field value.
                                                  *)
@@ -141,7 +142,8 @@ structure Simple =
       | typeOf (E_LoadSeq(ty, _)) = ty
       | typeOf (E_LoadImage(ty, _, _)) = ty
       | typeOf (E_InsideImage _) = SimpleTypes.T_Bool
-      | typeOf (E_FieldFn f) = let
+      | typeOf (E_CondField(_, _, _, ty)) = ty
+      | typeOf (E_FieldFn f) =  let
           val (dim, shp) = (case SimpleFunc.typeOf f
                  of (SimpleTypes.T_Tensor shp, [SimpleTypes.T_Tensor[]]) => (1, shp)
                   | (SimpleTypes.T_Tensor shp, [SimpleTypes.T_Tensor[d]]) => (d, shp)

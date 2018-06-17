@@ -454,6 +454,21 @@ structure Simplify : sig
                   in
                     (S.S_IfThenElse(x, s1, s2) :: stms, S.E_Var result)
                   end
+              | AST.E_CondField(e1, e2, e3, ty) => let
+                  val result = newTemp(cvtTy ty)
+                  val (stms, x) = simplifyExpToVar (cxt, e1, S.S_Var(result, NONE) :: stms)
+                  fun simplifyBranch e = let
+                        val (stms, e) = simplifyExp (cxt, e, [])
+                        val result = newTemp(cvtTy ty)
+                        in
+                          (result, S.S_Assign(result, e)::stms)
+                        end
+                  val (v1, s1) = simplifyBranch e2
+                  val (v2, s2) = simplifyBranch e3
+                  val exp  = S.E_CondField(x, v1,v2, cvtTy ty)
+                  in
+                    (s1@s2@stms, exp)
+                  end
               | AST.E_Orelse(e1, e2) => simplifyExp (
                   cxt,
                   AST.E_Cond(e1, AST.E_Lit(Literal.Bool true), e2, Ty.T_Bool),

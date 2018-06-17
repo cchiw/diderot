@@ -152,6 +152,7 @@ structure SimplifyFields : sig
               | S.E_LoadImage _ => image()
               | S.E_InsideImage _ => raise Fail "premature InsideImage"
 (* QUESTION: is this a valid way to handle field functions? *)
+              | S.E_CondField (x, e1, e2, ty) => (bindImages(lhs, VMap.empty); NONE)
               | S.E_FieldFn f => (bindImages(lhs, VMap.empty); NONE)
             (* end case *)
           end

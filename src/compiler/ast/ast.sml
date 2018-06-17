@@ -84,6 +84,7 @@ structure AST =
                                                          * that we restrict the indices to be
                                                          * constant expressions. *)
       | E_Cond of expr * expr * expr * Ty.ty            (* ty is result type *)
+      | E_CondField of expr * expr * expr * Ty.ty       (* branches are fields *)
       | E_Orelse of expr * expr                         (* non-strict '||' operator *)
       | E_Andalso of expr * expr                        (* non-struct '&&' operator *)
       | E_LoadNrrd of Ty.meta_var list * string * Ty.ty (* dynamic sequence and image loading *)

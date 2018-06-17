@@ -82,6 +82,9 @@ structure ASTPP : sig
                   | AST.E_Cond(e1, e2, e3, _) => (
                       string "("; pp e2; sp(); string "if"; sp(); pp e1; sp(); string "else";
                       sp(); pp e3; string ")")
+                  | AST.E_CondField(e1, e2, e3, _) => (
+                      string "("; pp e2; sp(); string "if"; sp(); pp e1; sp(); string "else";
+                      sp(); pp e3; string ")")
                   | AST.E_Orelse(e1, e2) => (
                       string "("; pp e1; sp(); string "||"; sp(); pp e2; string ")")
                   | AST.E_Andalso(e1, e2) => (

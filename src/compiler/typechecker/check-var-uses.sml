@@ -103,6 +103,7 @@ structure CheckVarUses : sig
                       List.foldl (fn (SOME e, unu) => chk(e, unu) | (NONE, unu) => unu)
                         (chk (e, unused)) indices
                   | AST.E_Cond(e1, e2, e3, _) => chk (e3, chk (e2, chk (e1, unused)))
+                  | AST.E_CondField(e1, e2, e3, _) => chk (e3, chk (e2, chk (e1, unused)))
                   | AST.E_Orelse(e1, e2) => chk (e2, chk (e1, unused))
                   | AST.E_Andalso(e1, e2) => chk (e2, chk (e1, unused))
                   | AST.E_LoadNrrd _ => unused

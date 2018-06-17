@@ -111,6 +111,9 @@ structure SimplePP : sig
                   | S.E_InsideImage(pos, img, s) => (
                       string "insideImage("; var pos; string ","; var img;
                       string ","; string(Int.toString s); string ")")
+                  | S.E_CondField (v, e1, e2, ty) => (
+                      string "conditional("; var v; string ") then ";
+                      var e1; " else "; var e2)
                   | S.E_FieldFn f => (string "field_fn("; ppFunc (ppStrm, f); string ")")
                 (* end case *))
           in

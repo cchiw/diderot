@@ -45,6 +45,7 @@ structure TypeOf : sig
             | AST.E_Seq(_, ty) => ty
             | AST.E_Slice(_, _, ty) => ty
             | AST.E_Cond(_, _, _, ty) => ty
+            | AST.E_CondField(_, _, _, ty) => ty
             | AST.E_Orelse _ => Ty.T_Bool
             | AST.E_Andalso _ => Ty.T_Bool
             | AST.E_LoadNrrd(_, _, ty) => ty

@@ -400,8 +400,10 @@ structure CheckExpr : sig
                    of (cond', Ty.T_Bool) => (case Util.coerceType2(eTy1, eTy2)
                          of SOME(e1', e2', ty) =>
                               if TU.isValueType ty
-                                then (AST.E_Cond(cond', e1', e2', ty), ty)
-                                else err (cxt, [
+                                then (AST.E_Cond(cond', e1', e2', ty), ty)                            
+                                else if TU.isValueTypeIf ty (* field *)
+                                  then (AST.E_CondField(cond', e1', e2', ty), ty)
+                                  else err (cxt, [
                                     S "result of conditional expression must be value type,\n",
                                     S "  but found ", TY ty
                                   ])
